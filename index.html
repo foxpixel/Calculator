@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script src="https://shivendrasaurav.github.io/Fluent-Design-For-Web/fluent.js"></script>
+    <script src="cal.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Calculator</title>
+    <link href="https://shivendrasaurav.github.io/Fluent-Design-For-Web/fluent.css" rel="stylesheet" type="text/css">
+    <style>
+        .primary_inverted {
+            background: #252525;
+            border: 1.5px solid transparent;
+        }
+
+        button.frost_container {
+            height: 60px;
+            width: 18%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="column large6 medium6 small12 center">
+        <input type="text" value="" id="ip" style="width: 95%; height: 100px; font-size: 28px;" disabled>
+        <br><br>
+
+        <button onmouseover="frosting();" class="frost_container primary_inverted" value="7"
+            onclick="document.getElementById('ip').value+='7'">
+            <span class="frost">7</span>
+        </button>
+        <button class="frost_container primary_inverted" value="8" onclick="document.getElementById('ip').value+='8'">
+            <span class="frost">8</span>
+        </button>
+        <button class="frost_container primary_inverted" value="9" onclick="document.getElementById('ip').value+='9'">
+            <span class="frost">9</span>
+        </button>
+        <button class="frost_container primary_inverted" value="/ " onclick="document.getElementById('ip').value+='/'">
+            <span class="frost">/</span>
+        </button>
+        <button class="frost_container primary_inverted" value="C" onclick="document.getElementById('ip').value=''">
+            <span class="frost">CLR</span>
+        </button>
+        <br><br>
+        <button class="frost_container primary_inverted" value="4" onclick="document.getElementById('ip').value+='4'">
+            <span class="frost">4</span>
+        </button>
+        <button class="frost_container primary_inverted" value="5" onclick="document.getElementById('ip').value+='5'">
+            <span class="frost">5</span>
+        </button>
+        <button class="frost_container primary_inverted" value="6" onclick="document.getElementById('ip').value+='6'">
+            <span class="frost">6</span>
+        </button>
+        <button class="frost_container primary_inverted" value="* " onclick="document.getElementById('ip').value+='*'">
+            <span class="frost">*</span>
+        </button>
+        <button class="frost_container primary_inverted" value="Del" onclick="del();">
+            <span class="frost">DEL</span>
+        </button>
+        <br><br>
+        <button class="frost_container primary_inverted" value="1" onclick="document.getElementById('ip').value+='1'">
+            <span class="frost">1</span>
+        </button>
+        <button class="frost_container primary_inverted" value="2" onclick="document.getElementById('ip').value+='2'">
+            <span class="frost">2</span>
+        </button>
+        <button class="frost_container primary_inverted" value="3" onclick="document.getElementById('ip').value+='3'">
+            <span class="frost">3</span>
+        </button>
+        <button class="frost_container primary_inverted" value="- " onclick="document.getElementById('ip').value+='-'">
+            <span class="frost">-</span>
+        </button>
+        <button class="frost_container primary_inverted" value="(" onclick="document.getElementById('ip').value+='('">
+            <span class="frost">(</span>
+        </button>
+        <br><br>
+        <button class="frost_container primary_inverted" value="0" onclick="document.getElementById('ip').value+='0'">
+            <span class="frost">0</span>
+        </button>
+        <button class="frost_container primary_inverted" value=". " onclick="document.getElementById('ip').value+='.'">
+            <span class="frost">.</span>
+        </button>
+        <button class="frost_container primary_inverted" value="=" onclick="cal()">
+            <span class="frost">=</span>
+        </button>
+        <button class="frost_container primary_inverted" value="+" onclick="document.getElementById('ip').value+='+'">
+            <span class="frost">+</span>
+        </button>
+        <button class="frost_container primary_inverted" value=")" onclick="document.getElementById('ip').value+=')'">
+            <span class="frost">)</span>
+        </button>
+    </div>
+</body>
+
+</html>
