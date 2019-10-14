@@ -1,97 +1,144 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
+    <head>
+        <title>Calculator</title>
+        <link href="fluent.css" type="text/css" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Web Calculator Based On Fluent Design">
+        <script src="calc.js"></script>
+        <script src="fluent.js"></script>
+        <link rel='manifest' href='manifest.webmanifest'>
+        <script src="pwabuilder-sw.js"></script>
+        <script>
+            
+            let deferredPrompt = null;
 
-<head>
-    <script src="https://shivendrasaurav.github.io/Fluent-Design-For-Web/fluent.js"></script>
-    <script src="cal.js"></script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Calculator</title>
-    <link href="https://shivendrasaurav.github.io/Fluent-Design-For-Web/fluent.css" rel="stylesheet" type="text/css">
-    <style>
-        .primary_inverted {
-            background: #252525;
-            border: 1.5px solid transparent;
+            window.addEventListener('beforeinstallprompt', (e) => {
+            // Prevent Chrome 67 and earlier from automatically showing the prompt
+            e.preventDefault();
+            // Stash the event so it can be triggered later.
+            deferredPrompt = e;
+            });
+
+            async function install() {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                console.log(deferredPrompt)
+                deferredPrompt.userChoice.then(function(choiceResult){
+
+                if (choiceResult.outcome === 'accepted') {
+                console.log('Your PWA has been installed');
+                } else {
+                console.log('User chose to not install your PWA');
+                }
+
+                deferredPrompt = null;
+
+                });
+
+            
+            }
+            }
+
+        </script>
+        <script>
+            function checkinstall(){
+                if (window.matchMedia('(display-mode: standalone)').matches) {  
+                    document.getElementById("install_button").style.display=("none");
+                    console.log('display-mode is standalone');
+                }  
+            }
+        </script>
+    </head>
+    <body class="column large6 small12 medium10 center primary_black" onload="checkinstall();">
+        <input type="text" class="calc_area primary_black" id="calc_disp" disabled><br><br>
+        <div style="margin-left: 5%">
+            <button class="frost_container column small3" onclick="write7();" onmouseover="frosting();">
+                <span class="frost">7</span>
+            </button>
+            <button class="frost_container column small3" onclick="write8();" onmouseover="frosting();">
+                <span class="frost">8</span>
+            </button>
+            <button class="frost_container column small3" onclick="write9();" onmouseover="frosting();">
+                <span class="frost">9</span>
+            </button>
+            <button class="frost_container column small3" onclick="writedivide();" onmouseover="frosting();">
+                <span class="frost">/</span>
+            </button>
+            <button class="frost_container column small3" onclick="writeclear();" onmouseover="frosting();">
+                <span class="frost">CLR</span>
+            </button>
+            <br><br>
+            <button class="frost_container column small3" onclick="write4();" onmouseover="frosting();">
+                <span class="frost">4</span>
+            </button>
+            <button class="frost_container column small3" onclick="write5();" onmouseover="frosting();">
+                <span class="frost">5</span>
+            </button>
+            <button class="frost_container column small3" onclick="write6();" onmouseover="frosting();">
+                <span class="frost">6</span>
+            </button>
+            <button class="frost_container column small3" onclick="writeproduct();" onmouseover="frosting();">
+                <span class="frost">*</span>
+            </button>
+            <button class="frost_container column small3" onclick="writeinbracket();" onmouseover="frosting();">
+                <span class="frost">(</span>
+            </button>
+            <br><br>
+            <button class="frost_container column small3" onclick="write1();" onmouseover="frosting();">
+                <span class="frost">1</span>
+            </button>
+            <button class="frost_container column small3" onclick="write2();" onmouseover="frosting();">
+                <span class="frost">2</span>
+            </button>
+            <button class="frost_container column small3" onclick="write3();" onmouseover="frosting();">
+                <span class="frost">3</span>
+            </button>
+            <button class="frost_container column small3" onclick="writesub();" onmouseover="frosting();">
+                <span class="frost">-</span>
+            </button>
+            <button class="frost_container column small3" onclick="writeoutbracket();" onmouseover="frosting();">
+                <span class="frost">)</span>
+            </button>
+            <br><br>
+            <button class="frost_container column small3" onclick="writedecimal();" onmouseover="frosting();">
+                <span class="frost">.</span>
+            </button>
+            <button class="frost_container column small3" onclick="write0();" onmouseover="frosting();">
+                <span class="frost">0</span>
+            </button>
+            <button class="frost_container column small3" onclick="writedelete();" onmouseover="frosting();">
+                <span class="frost">DEL</span>
+            </button>
+            <button class="frost_container column small3" onclick="writeadd();" onmouseover="frosting();">
+                <span class="frost">+</span>
+            </button>
+            <button class="frost_container column small3" onclick="calculate(); output();" onmouseover="frosting();">
+                <span class="frost">=</span>
+            </button>
+        </div><br><br>
+        <button id="install_button" class="large center frost_container" onmouseover="frosting();" onclick="install();" style="background: rgb(14, 95, 202);">
+            <span class="frost">Install Calculator</span>
+        </button>
+    </body>
+    <script>
+        // This is the "Offline copy of pages" service worker
+
+        // Add this below content to your HTML page, or add the js file to your page at the very top to register service worker
+
+        // Check compatibility for the browser we're running this in
+        if ("serviceWorker" in navigator) {
+            if (navigator.serviceWorker.controller) {
+                console.log("[PWA Builder] active service worker found, no need to register");
+            } else {
+                // Register the service worker
+                navigator.serviceWorker
+                .register("pwabuilder-sw.js", {
+                    scope: "./"
+                })
+                .then(function (reg) {
+                    console.log("[PWA Builder] Service worker has been registered for scope: " + reg.scope);
+                });
+            }
         }
-
-        button.frost_container {
-            height: 60px;
-            width: 18%;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="column large6 medium6 small12 center">
-        <input type="text" value="" id="ip" style="width: 95%; height: 100px; font-size: 28px;" disabled>
-        <br><br>
-
-        <button onmouseover="frosting();" class="frost_container primary_inverted" value="7"
-            onclick="document.getElementById('ip').value+='7'">
-            <span class="frost">7</span>
-        </button>
-        <button class="frost_container primary_inverted" value="8" onclick="document.getElementById('ip').value+='8'">
-            <span class="frost">8</span>
-        </button>
-        <button class="frost_container primary_inverted" value="9" onclick="document.getElementById('ip').value+='9'">
-            <span class="frost">9</span>
-        </button>
-        <button class="frost_container primary_inverted" value="/ " onclick="document.getElementById('ip').value+='/'">
-            <span class="frost">/</span>
-        </button>
-        <button class="frost_container primary_inverted" value="C" onclick="document.getElementById('ip').value=''">
-            <span class="frost">CLR</span>
-        </button>
-        <br><br>
-        <button class="frost_container primary_inverted" value="4" onclick="document.getElementById('ip').value+='4'">
-            <span class="frost">4</span>
-        </button>
-        <button class="frost_container primary_inverted" value="5" onclick="document.getElementById('ip').value+='5'">
-            <span class="frost">5</span>
-        </button>
-        <button class="frost_container primary_inverted" value="6" onclick="document.getElementById('ip').value+='6'">
-            <span class="frost">6</span>
-        </button>
-        <button class="frost_container primary_inverted" value="* " onclick="document.getElementById('ip').value+='*'">
-            <span class="frost">*</span>
-        </button>
-        <button class="frost_container primary_inverted" value="Del" onclick="del();">
-            <span class="frost">DEL</span>
-        </button>
-        <br><br>
-        <button class="frost_container primary_inverted" value="1" onclick="document.getElementById('ip').value+='1'">
-            <span class="frost">1</span>
-        </button>
-        <button class="frost_container primary_inverted" value="2" onclick="document.getElementById('ip').value+='2'">
-            <span class="frost">2</span>
-        </button>
-        <button class="frost_container primary_inverted" value="3" onclick="document.getElementById('ip').value+='3'">
-            <span class="frost">3</span>
-        </button>
-        <button class="frost_container primary_inverted" value="- " onclick="document.getElementById('ip').value+='-'">
-            <span class="frost">-</span>
-        </button>
-        <button class="frost_container primary_inverted" value="(" onclick="document.getElementById('ip').value+='('">
-            <span class="frost">(</span>
-        </button>
-        <br><br>
-        <button class="frost_container primary_inverted" value="0" onclick="document.getElementById('ip').value+='0'">
-            <span class="frost">0</span>
-        </button>
-        <button class="frost_container primary_inverted" value=". " onclick="document.getElementById('ip').value+='.'">
-            <span class="frost">.</span>
-        </button>
-        <button class="frost_container primary_inverted" value="=" onclick="cal()">
-            <span class="frost">=</span>
-        </button>
-        <button class="frost_container primary_inverted" value="+" onclick="document.getElementById('ip').value+='+'">
-            <span class="frost">+</span>
-        </button>
-        <button class="frost_container primary_inverted" value=")" onclick="document.getElementById('ip').value+=')'">
-            <span class="frost">)</span>
-        </button>
-    </div>
-</body>
-
-</html>
+    </script>
+    </html>
